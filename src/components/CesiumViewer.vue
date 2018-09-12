@@ -35,7 +35,7 @@ export default {
       viewerOptions: {
         timeline: false,
         baseLayerPicker: false,
-        animation: false,
+        animation: true,
         geocoder: new LocalGeocoder()
       },
       naviOptions: {

@@ -134,7 +134,7 @@ var FlyManTool = {
 			var _ = T.features[0];
 			var x = _.geometry.coordinates;
 			var D = [];
-			for (i = 0; i < x.length; i++) {
+			for (var i = 0; i < x.length; i++) {
 				var S = x[i][0];
 				var b = x[i][1];
 				D.push([S, b])
