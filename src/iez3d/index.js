@@ -12,6 +12,7 @@ import {getImageLayers, getModelLayers, getSubDatas, localLayers} from './layers
 import {DataType, Event, SubDataFormat, SubDataType} from '../utils/constant'
 import {measureLineSpace} from '../utils/measure'
 import MeasureUtilNew from '../utils/MeasureUtilNew'
+import path_pinggu3 from '../sampledata/path_pinggu3.js'
 import FlyManUtil_VUE2 from '../utils/FlyManUtil_VUE2'
 import JsonDataSource from './JsonDataSource'
 
@@ -414,7 +415,8 @@ iez3d.prototype.layerManager = function () {
       //this.drawTool["destory"];
       //this.drawTool["route_DrS"]();
       var flyOption = {
-          flyPathJsVar: {"type": "FeatureCollection","features": [{"type": "Feature","properties": {},"geometry": {"type": "LineString","coordinates": [[117.24326, 40.21185],[117.24289, 40.21263],[117.24259, 40.21380]]}}]},
+          //flyPathJsVar: {"type": "FeatureCollection","features": [{"type": "Feature","properties": {},"geometry": {"type": "LineString","coordinates": [[117.24326, 40.21185],[117.24289, 40.21263],[117.24259, 40.21380]]}}]},
+          flyPathJsVar:path_pinggu3,
           pathGeoJsonUrl: './sampledata/map97geo.json',
           staticPos: [117.244548, 40.21395],
           flyHeight: 300,
