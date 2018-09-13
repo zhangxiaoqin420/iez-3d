@@ -11,6 +11,7 @@ const debug = process.env.NODE_ENV !== 'production'
 let cesiumSource = './node_modules/cesium/Source'
 let cesiumWorkers = '../Build/Cesium/Workers'
 let pluginsDir = './public/static/plugins/'
+let sampleDataDirRoot = './src/'
 module.exports = {
   baseUrl: '',
   // 生产环境下 sourceMap
@@ -71,6 +72,7 @@ module.exports = {
       new CopyWebpackPlugin([{from: path.join(cesiumSource, 'Assets'), to: 'static/Assets'}]),
       new CopyWebpackPlugin([{from: path.join(cesiumSource, 'Widgets'), to: 'static/Widgets'}]),
       new CopyWebpackPlugin([{from: path.join(cesiumSource, 'ThirdParty/Workers'), to: 'static/ThirdParty/Workers'}]),
+        new CopyWebpackPlugin([{from: path.join(sampleDataDirRoot, 'sampledata'), to: 'sampledata'}]),
       new webpack.DefinePlugin({
         CESIUM_BASE_URL: JSON.stringify('./static')
       })
