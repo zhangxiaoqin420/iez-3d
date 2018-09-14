@@ -20,7 +20,8 @@
                                 <td>飞行路线</td>
                                 <td>
                                     <Button  type='text' title="飞行" @click="StartFly"><Icon type="md-jet" /></Button>
-                                    <Button  type='text' title="编辑"><Icon type="md-card" /></Button>
+                                    <Button  type='text' title="结束" @click="CloseFly"><Icon type="ios-close" /></Button>
+                                    <!--<Button  type='text' title="编辑"><Icon type="md-card" /></Button>-->
                                     <Button  type='text' title="删除"><Icon type="ios-trash-outline" /></Button>
                                 </td>
                             </tr>
@@ -165,6 +166,7 @@
 
 <script>
   import {eventBus} from '../../eventbus/EventBus'
+  import {FlyType, ToolsEvent} from '../../../iez3d/eventhandler/ToolCaseEventHandler'
   export default {
     name: 'Flight',
     data(){
@@ -179,8 +181,10 @@
     },
     methods: {
       StartFly:function(){
-        console.info("111111");
-        eventBus.$emit('startfly');
+        eventBus.$emit(ToolsEvent.Fly,FlyType.Fly);
+      },
+      CloseFly:function(){
+        eventBus.$emit(ToolsEvent.Fly,FlyType.FlyClose);
       }
 
     },

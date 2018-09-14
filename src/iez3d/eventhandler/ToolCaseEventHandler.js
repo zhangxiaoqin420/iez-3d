@@ -2,7 +2,8 @@
 import Cesium from 'cesium/Cesium'
 import {clear, measureAreaSpace, measureLineSpace} from '../../utils/measure'
 import {add_dian,add_line,  add_polygon, add_title, changeTitle, clearBZ} from '../../utils/biaozhu'
-
+import MeasureUtilNew from '../../utils/MeasureUtilNew'
+import FlyManUtil_VUE from '../../utils/FlyManUtil_VUE'
 export default class ToolCaseEventHandler {
   constructor (iez3d) {
     if (!Cesium.defined(iez3d)) {
@@ -15,18 +16,20 @@ export default class ToolCaseEventHandler {
     this.eventbus = iez3d.eventbus
     this.iez3d = iez3d
     this.init()
-
+    MeasureUtilNew.moduleDef();//量测
+    FlyManUtil_VUE.moduleDef();//飞行
+    this.drawTool = new Cesium.DrawTool({
+        contextObj: this.viewer,
+        useMea: true,
+        useClampGrd: true
+    })
+    this.flyTool = new Cesium.FlyManTool({
+      contextObj: this.viewer
+    });
   }
 
   init () {
     this.viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK)
-    this.eventbus.$on('startmeasure', target => {
-      // measureLineSpace(this.viewer)
-      console.log('startmeasure [this,this.drawTool,target]=', [this, this.drawTool, target])
-      this.handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK) // 删除默认事件 destory
-      //this.drawTool["destory"];
-      this.drawTool['route_DrS']()
-    })
     this.eventbus.$on('startfly', target => {
       var flyOption = {
         pathGeoJsonUrl: 'E:/sampledata/map97geo.json',
@@ -47,24 +50,29 @@ export default class ToolCaseEventHandler {
       //this.drawTool["destory"];
       this.flyTool['runFlyOnPath'](flyOption)
     })
+    //量测功能
     this.eventbus.$on(ToolsEvent.Measure, target => {
       switch (target) {
         case MeasureType.Line:
-          measureLineSpace(this.viewer)
+          this.drawTool['route_DrS']()
+         // measureLineSpace(this.viewer)
           break
         case MeasureType.Area:
-          measureAreaSpace(this.viewer)
+          this.drawTool['region_DrS']()
+          //measureAreaSpace(this.viewer)
           break
         case MeasureType.Clear:
-          clear(this.viewer)
+          this.drawTool['destory']()
+         // clear(this.viewer)
           break
-        // case MeasureType.High:
-        //   this.handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK) // 删除默认事件 destory
-        //   this.drawTool["route_DrS"]();
-        //   break
+        case MeasureType.High:
+          //this.handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK) // 删除默认事件 destory
+          this.drawTool['elev_DrS']()
+          break
       }
 
     })
+    //标注功能
     this.eventbus.$on(ToolsEvent.Mapping, ({type, status,val}) => {
       switch (type){
         case MarkType.Point:
@@ -85,6 +93,17 @@ export default class ToolCaseEventHandler {
         case MarkType.Clear:
           clearBZ(this.viewer,status)
           break;
+      }
+    })
+    //飞行功能
+    this.eventbus.$on(ToolsEvent.Fly, target => {
+      switch (target) {
+        case FlyType.Fly:
+          this.flyTool['runFlyOnPath2']({})
+        break
+        case FlyType.FlyClose:
+          this.flyTool['closeFlyOnPath2']({})
+          break
       }
     })
 
@@ -108,8 +127,13 @@ export const MarkType = {
   Clear:'clear'
 
 }
+export const FlyType = {
+  Fly:'fly',
+  FlyClose:'flyClose'
+}
 //ToolsEvent 常用工具事件
 export const ToolsEvent = {
   Mapping:'mapping',
-  Measure:'measure'
+  Measure:'measure',
+  Fly:'fly'
 }
