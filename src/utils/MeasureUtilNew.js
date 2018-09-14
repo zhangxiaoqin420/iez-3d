@@ -29,6 +29,7 @@ moduleDef() {
 	r.prototype.setUseClampGrd = function(e) {
 		this._useClampGrd = e
 	};
+	//点位
 	r.prototype.pos_DrS = function() {
 		var s = this;
 		v = !0;
@@ -130,6 +131,7 @@ moduleDef() {
 	r.prototype.pos_DrE = function() {
 		v = !1, this._evtHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK)
 	};
+	//长度
 	r.prototype.route_DrS = function() {
 		var o = this;
 		this.pos_DrE();
@@ -364,6 +366,7 @@ moduleDef() {
 		this._evtHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK);
 		this._evtHandler.removeInputAction(Cesium.ScreenSpaceEventType.RIGHT_CLICK)
 	};
+	//面积
 	r.prototype.region_DrS = function() {
 		var o = this;
 		this.pos_DrE();
@@ -633,6 +636,7 @@ moduleDef() {
 		this._evtHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK);
 		this._evtHandler.removeInputAction(Cesium.ScreenSpaceEventType.RIGHT_CLICK)
 	};
+	//高度
 	r.prototype.elev_DrS = function() {
 		var r = this;
 		this.pos_DrE();

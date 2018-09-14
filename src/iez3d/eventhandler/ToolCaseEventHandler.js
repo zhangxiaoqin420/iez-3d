@@ -2,8 +2,11 @@
 import Cesium from 'cesium/Cesium'
 import {clear, measureAreaSpace, measureLineSpace} from '../../utils/measure'
 import {add_dian,add_line,  add_polygon, add_title, changeTitle, clearBZ} from '../../utils/biaozhu'
+
 import MeasureUtilNew from '../../utils/MeasureUtilNew'
 import FlyManUtil_VUE from '../../utils/FlyManUtil_VUE'
+import path_pinggu3 from '../../sampledata/path_pinggu3'
+
 export default class ToolCaseEventHandler {
   constructor (iez3d) {
     if (!Cesium.defined(iez3d)) {
@@ -30,26 +33,6 @@ export default class ToolCaseEventHandler {
 
   init () {
     this.viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK)
-    this.eventbus.$on('startfly', target => {
-      var flyOption = {
-        pathGeoJsonUrl: 'E:/sampledata/map97geo.json',
-        staticPos: [117.244548, 40.21395],
-        flyHeight: 300,
-        multiplier: 2,
-        pathWidth: 3,
-        flySpeed: 50,
-        pathShow: !!1,
-        pathLeadTime: 0,
-        pathTrailTime: 60,
-        modelUrl: 'E:/sampledata/model/CesiumAir/Cesium_Air.gltf'
-
-      }
-      // measureLineSpace(this.viewer)
-      console.log('startfly [this,this.flyTool,target]=', [this, this.flyTool, target])
-      this.handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK) // 删除默认事件 destory
-      //this.drawTool["destory"];
-      this.flyTool['runFlyOnPath'](flyOption)
-    })
     //量测功能
     this.eventbus.$on(ToolsEvent.Measure, target => {
       switch (target) {
@@ -97,12 +80,28 @@ export default class ToolCaseEventHandler {
     })
     //飞行功能
     this.eventbus.$on(ToolsEvent.Fly, target => {
+      var flyOption = {
+        //flyPathJsVar: {"type": "FeatureCollection","features": [{"type": "Feature","properties": {},"geometry": {"type": "LineString","coordinates": [[117.24326, 40.21185],[117.24289, 40.21263],[117.24259, 40.21380]]}}]},
+        flyPathJsVar:path_pinggu3,
+        pathGeoJsonUrl: 'data/map97geo.json',
+        staticPos: [117.244548, 40.21395],
+        flyHeight: 300,
+        multiplier: 2,
+        pathWidth: 3,
+        flySpeed: 50,
+        pathShow: !!1,
+        pathLeadTime: 0,
+        pathTrailTime: 60,
+        modelUrl: 'data/Cesium_Air.gltf'
+
+      };
       switch (target) {
         case FlyType.Fly:
-          this.flyTool['runFlyOnPath2']({})
+         // this.flyManTool.runFlyOnPath2(flyOption);
+          this.flyTool.runFlyOnPath2(flyOption)
         break
         case FlyType.FlyClose:
-          this.flyTool['closeFlyOnPath2']({})
+          this.flyTool.closeFlyOnPath2(flyOption)
           break
       }
     })

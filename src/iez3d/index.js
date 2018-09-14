@@ -13,8 +13,10 @@ import {Event} from '../utils/constant'
 import FileSaver from 'file-saver'
 import ToolCaseEventHandler from './eventhandler/ToolCaseEventHandler'
 import SettingEventHandler from './eventhandler/SettingEventHandler'
-
-
+import MeasureUtilNew from '../utils/MeasureUtilNew'
+import path_pinggu3 from '../sampledata/path_pinggu3.js'
+import FlyManUtil_VUE2 from '../utils/FlyManUtil_VUE2'
+import JsonDataSource from './JsonDataSource'
 
 /**
  *@time: 2018/8/10上午9:48
@@ -24,11 +26,9 @@ import SettingEventHandler from './eventhandler/SettingEventHandler'
  *@param {{}} options  The Options
  */
 const iez3d = function (options) {
-  // 初始化 量测工具
-  // CesiumMeasure.init()
-  //   MeasureUtilNew.moduleDef();
-    //初始化模拟飞行
-    // FlyManTool.moduleDef();
+
+  MeasureUtilNew.moduleDef()
+  FlyManUtil_VUE2.moduleDef()
   this.init(options)
 }
 
@@ -64,7 +64,10 @@ iez3d.prototype.init = function (options) {
   //   contextObj: this.viewer
   // });
 
+  this.flyManTool = new Cesium.FlyManTool({
+    contextObj: this.viewer
 
+  })
 
   // 显示帧率
   if (Cesium.defined(options.viewerOptions.geocoder) && (options.viewerOptions.geocoder instanceof LocalGeocoder)) {
@@ -237,6 +240,7 @@ iez3d.prototype.test = function (url, height) {
       uri: url,
       minimumPixelSize: 128,
       maximumScale: 20000
+
     }
   })
   this.viewer.trackedEntity = entity
