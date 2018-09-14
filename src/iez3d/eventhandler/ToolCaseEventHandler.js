@@ -2,6 +2,7 @@
 import Cesium from 'cesium/Cesium'
 import {clear, measureAreaSpace, measureLineSpace} from '../../utils/measure'
 import {add_dian,add_line,  add_polygon, add_title, changeTitle, clearBZ} from '../../utils/biaozhu'
+import path_pinggu3 from '../../sampledata/path_pinggu3'
 
 export default class ToolCaseEventHandler {
   constructor (iez3d) {
@@ -27,6 +28,30 @@ export default class ToolCaseEventHandler {
       //this.drawTool["destory"];
       this.drawTool['route_DrS']()
     })
+
+    // this.eventbus.$on('startmeasure', target => {
+    //   // measureLineSpace(this.viewer)
+    //   console.log("startmeasure [this,this.drawTool,target]="  ,[this,this.drawTool,target])
+    //   //this.handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK) // 删除默认事件 destory
+    //   //this.drawTool["destory"];
+    //   //this.drawTool["route_DrS"]();
+    //   var flyOption = {
+    //     //flyPathJsVar: {"type": "FeatureCollection","features": [{"type": "Feature","properties": {},"geometry": {"type": "LineString","coordinates": [[117.24326, 40.21185],[117.24289, 40.21263],[117.24259, 40.21380]]}}]},
+    //     flyPathJsVar:path_pinggu3,
+    //     pathGeoJsonUrl: './sampledata/map97geo.json',
+    //     staticPos: [117.244548, 40.21395],
+    //     flyHeight: 300,
+    //     multiplier: 2,
+    //     pathWidth: 3,
+    //     flySpeed: 50,
+    //     pathShow: !!1,
+    //     pathLeadTime: 0,
+    //     pathTrailTime: 60,
+    //     modelUrl: './sampledata/model/CesiumAir/Cesium_Air.gltf'
+    //
+    //   };
+    //   this.flyManTool.runFlyOnPath2(flyOption);
+    // })
     this.eventbus.$on('startfly', target => {
       var flyOption = {
         pathGeoJsonUrl: 'E:/sampledata/map97geo.json',

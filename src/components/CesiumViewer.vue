@@ -35,22 +35,19 @@ export default {
       viewerOptions: {
         timeline: false,
         baseLayerPicker: false,
-        animation: false,
+        animation: true,
         geocoder: new LocalGeocoder(),
         contextOptions: {
           webgl: {
             // support screenshots
             preserveDrawingBuffer: true
           }
-        }
-      },
-      naviOptions: {
-
+        },
+        naviOptions: {}
       }
+      // iez3d.test('测试实例方法啊')
     })
-    // iez3d.test('测试实例方法啊')
   }
-
 }
 </script>
 
